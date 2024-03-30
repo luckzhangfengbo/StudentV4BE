@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('students/', views.get_students), #获取所有学生信息的接口
     path('students/query/', views.query_student), #查询所有学生信息的接口
+    path('sno/check/', views.is_exsits_sno), #校验学号是否存在的接口
 ]

@@ -29,3 +29,15 @@ def query_student(request):
     except Exception as e:
         return JsonResponse({'code': 0, 'msg': "查询学生信息出现异常" + str(e)})
 
+
+def is_exsits_sno(request):
+    # 判断学号是否存在
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+        obj_students = Student.objects.filter(sno=data['sno'])
+        if obj_students.count() == 0:
+            return JsonResponse({'code': 1,'exsits': False})
+        else:
+            return JsonResponse({'code': 1,'exsits': True})
+    except Exception as e:
+        return JsonResponse({'code': 0, 'msg': "校验学号失败，具体原因" + str(e)})
