@@ -41,3 +41,16 @@ def is_exsits_sno(request):
             return JsonResponse({'code': 1,'exists': True})
     except Exception as e:
         return JsonResponse({'code': 0, 'msg': "校验学号失败，具体原因" + str(e)})
+
+def add_student(request):
+    #新增学生信息
+    data = json.loads(request.body.decode('utf-8'))
+    try:
+        obj_student = Student(sno=data['sno'],name=data['name'],gender=data['gender'],birthday=data['birthday'],
+                              mobile=data['mobile'],email=data['email'],address=data['address'])
+        obj_student.save()
+        obj_students = Student.objects.all().values()
+        students = list(obj_students)
+        return JsonResponse({'code': 1, 'data': students})
+    except Exception as e:
+        return JsonResponse({'code': 0, 'msg': "新增学生信息出现异常" + str(e)})
