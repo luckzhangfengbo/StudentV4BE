@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hk^lp1@pl*a_3l3mc=t&#qlm*shv)&q5frzz4tjnsnw0t)kt14
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+#下面这个添加地址就是对外提供允许访问的地址， 例如 192.168.233.123 本地的话就不用添加
 ALLOWED_HOSTS = []
 
 
@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -133,3 +135,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 添加cors配置
+#设置白名单
+CORS_ORIGIN_WHITELIST=[
+    "http://127.0.0.1:5500",
+]
+# CORS_ORIDIN_ALLOW_ALL=True #所有的ip都可以访问
+#设置cookies
+CORS_ALLOW_CREDENTIALS=True
+
