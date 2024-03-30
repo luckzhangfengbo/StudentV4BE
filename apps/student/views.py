@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 from student.models import Student
 from django.http import JsonResponse
+import json
+from django.db.models import Q
 def get_students(request):
     try:
         obj_students = Student.objects.all().values()
@@ -11,3 +13,19 @@ def get_students(request):
         return JsonResponse({'code':1,'data':students})
     except Exception as e:
         return JsonResponse({'code':0,'msg':"获取学生信息出现异常" + str(e)})
+
+def query_student(request):
+    #接收传递过来的查询条件 axios默认是json格式, ---字典类型（"inputstr"） -- data = ['inputstr']
+    data = json.loads(request.body.decode('utf-8'))
+
+    try:
+        #使用Q查询获取满足条件的数据
+        obj_students = Student.objects.filter(Q(sno__contains=data['inputstr'])|Q(name__contains=data['inputstr'])
+                                              |Q(gender__icontains=data['inputstr'])|Q(birthday__contains=data['inputstr'])
+                                                |Q(mobile__contains=data['inputstr'])|Q(email__contains=data['inputstr'])
+                                                |Q(address__contains=data['inputstr'])).values()
+        students = list(obj_students)
+        return JsonResponse({'code': 1, 'data': students})
+    except Exception as e:
+        return JsonResponse({'code': 0, 'msg': "查询学生信息出现异常" + str(e)})
+
