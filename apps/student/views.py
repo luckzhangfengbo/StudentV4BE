@@ -54,3 +54,22 @@ def add_student(request):
         return JsonResponse({'code': 1, 'data': students})
     except Exception as e:
         return JsonResponse({'code': 0, 'msg': "新增学生信息出现异常" + str(e)})
+
+def update_student(request):
+    #新增学生信息
+    data = json.loads(request.body.decode('utf-8'))
+    try:
+        obj_student = Student.objects.get(sno=data['sno'])
+        obj_student.name = data['name']
+        obj_student.gender = data['gender']
+        obj_student.birthday = data['birthday']
+        obj_student.mobile = data['mobile']
+        obj_student.email = data['email']
+        obj_student.address = data['address']
+
+        obj_student.save()
+        obj_students = Student.objects.all().values()
+        students = list(obj_students)
+        return JsonResponse({'code': 1, 'data': students})
+    except Exception as e:
+        return JsonResponse({'code': 0, 'msg': "修改学生信息出现异常" + str(e)})
