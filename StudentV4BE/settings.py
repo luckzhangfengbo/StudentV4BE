@@ -140,6 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #设置白名单
 CORS_ORIGIN_WHITELIST=[
     "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501"
 ]
 # CORS_ORIDIN_ALLOW_ALL=True #所有的ip都可以访问
 #设置cookies
